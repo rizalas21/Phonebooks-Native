@@ -1,7 +1,7 @@
 import axios from "axios"
 
 const req = axios.create({
-    baseURL: 'http://192.168.100.167:3001/api/',
+    baseURL: 'http://192.168.1.61:3001/api/',
     timeout: 1000,
     headers: { 'X-Custom-Header': 'foobar' }
 });

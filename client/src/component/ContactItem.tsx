@@ -1,4 +1,5 @@
 import {
+  Alert,
   Image,
   StyleSheet,
   Text,
@@ -9,7 +10,6 @@ import {
 import {deletePhonebooks, updateData} from '../actions/contact';
 import {useDispatch} from 'react-redux';
 import {useState} from 'react';
-import {confirmAlert} from 'react-confirm-alert';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {
   faFloppyDisk,
@@ -25,19 +25,17 @@ export default function ContactItem({item}: {item: any}) {
   const navigation: any = useNavigation();
 
   const submit = ({item}: {item: any}) => {
-    confirmAlert({
-      title: 'CONFIRM TO DELETE',
-      message: `Are you sure to delete this contact ${item.name}`,
-      buttons: [
+    Alert.alert(
+      'Delete Contact',
+      `Are you sure to delete this contact ${item.name}?`,
+      [
         {
-          label: 'Yes',
-          onClick: () => dispatch(deletePhonebooks({id: item.id})),
+          text: 'Cancel',
+          onPress: () => navigation.navigate('Home'),
         },
-        {
-          label: 'No',
-        },
+        {text: 'OK', onPress: () => dispatch(deletePhonebooks({id: item.id}))},
       ],
-    });
+    );
   };
 
   const handleData = ({id}: {id: number}) => {
@@ -53,7 +51,7 @@ export default function ContactItem({item}: {item: any}) {
           onPress={() => navigation.navigate('Avatar')}>
           <Image
             source={{
-              uri: `http://192.168.100.167:3001/images/${
+              uri: `http://192.168.1.61:3001/images/${
                 item.avatar ? item.avatar : 'Defaultavatar.png'
               }`,
             }}
@@ -74,8 +72,8 @@ export default function ContactItem({item}: {item: any}) {
           <View style={css.button}>
             <TouchableOpacity
               style={css.btnEdit}
-              onPress={() => handleData(item.id)}>
-              <FontAwesomeIcon icon={faFloppyDisk} />
+              onPress={() => handleData({id: item.id})}>
+              <FontAwesomeIcon size={20} icon={faFloppyDisk} />
             </TouchableOpacity>
           </View>
         </View>
@@ -89,7 +87,7 @@ export default function ContactItem({item}: {item: any}) {
           onPress={() => navigation.navigate('Avatar')}>
           <Image
             source={{
-              uri: `http://192.168.100.167:3001/images/${
+              uri: `http://192.168.1.61:3001/images/${
                 item.avatar ? item.avatar : 'Defaultavatar.png'
               }`,
             }}
@@ -97,18 +95,18 @@ export default function ContactItem({item}: {item: any}) {
           />
         </TouchableOpacity>
         <View style={css.list}>
-          <Text>{item.name}</Text>
-          <Text>{item.phone}</Text>
+          <Text style={css.text}>{item.name}</Text>
+          <Text style={css.text}>{item.phone}</Text>
           <View style={css.button}>
             <TouchableOpacity
               style={css.btnEdit}
               onPress={() => setIsEdit(!isEdit)}>
-              <FontAwesomeIcon icon={faPenToSquare} />
+              <FontAwesomeIcon size={20} icon={faPenToSquare} />
             </TouchableOpacity>
             <TouchableOpacity
               style={css.btnDelete}
-              onPress={() => submit(item)}>
-              <FontAwesomeIcon icon={faTrashCan} />
+              onPress={() => submit({item})}>
+              <FontAwesomeIcon size={20} icon={faTrashCan} />
             </TouchableOpacity>
           </View>
         </View>
@@ -118,12 +116,53 @@ export default function ContactItem({item}: {item: any}) {
 }
 
 const css = StyleSheet.create({
-  containerData: {},
-  containerImage: {},
-  avatar: {},
-  list: {},
-  input: {},
-  button: {},
+  containerData: {
+    backgroundColor: '#3333',
+    width: '100%',
+    height: 'auto',
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: 'black',
+    borderRadius: 3,
+    padding: 10,
+    marginTop: 10,
+    marginBottom: 10,
+  },
+  containerImage: {
+    width: '30%',
+    height: '100%',
+  },
+  avatar: {
+    height: 110,
+    width: 100,
+    borderRadius: 60,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  list: {
+    marginLeft: 20,
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: 'black',
+    width: '320%',
+    height: 40,
+    marginBottom: 10,
+  },
+  button: {
+    width: '45%',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
   btnEdit: {},
   btnDelete: {},
+  text: {
+    marginBottom: 7,
+  },
 });

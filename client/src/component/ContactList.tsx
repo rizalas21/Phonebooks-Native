@@ -27,7 +27,7 @@ export default function ContactList({
     };
     readData();
   }, [dispatch, keyword, sort]);
-  console.log(phonebooks)
+  console.log(phonebooks);
 
   return (
     <View style={css.container}>
@@ -40,5 +40,10 @@ export default function ContactList({
 }
 
 const css = StyleSheet.create({
-  container: {},
+  container: {
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 90,
+  },
 });
