@@ -84,7 +84,7 @@ export default function ContactItem({item}: {item: any}) {
       <View style={css.containerData} key={item.name}>
         <TouchableOpacity
           style={css.containerImage}
-          onPress={() => navigation.navigate('Avatar')}>
+          onPress={() => navigation.navigate('Avatar', {id: item.id})}>
           <Image
             source={{
               uri: `http://192.168.1.61:3001/images/${
@@ -150,7 +150,7 @@ const css = StyleSheet.create({
   input: {
     borderWidth: 1,
     borderColor: 'black',
-    width: '320%',
+    width: '170%',
     height: 40,
     marginBottom: 10,
   },
