@@ -51,7 +51,7 @@ export default function ContactItem({item}: {item: any}) {
           onPress={() => navigation.navigate('Avatar')}>
           <Image
             source={{
-              uri: `http://192.168.1.61:3001/images/${
+              uri: `http://192.168.100.167:3001/images/${
                 item.avatar ? item.avatar : 'Defaultavatar.png'
               }`,
             }}
@@ -87,7 +87,7 @@ export default function ContactItem({item}: {item: any}) {
           onPress={() => navigation.navigate('Avatar', {id: item.id})}>
           <Image
             source={{
-              uri: `http://192.168.1.61:3001/images/${
+              uri: `http://192.168.100.167:3001/images/${
                 item.avatar ? item.avatar : 'Defaultavatar.png'
               }`,
             }}

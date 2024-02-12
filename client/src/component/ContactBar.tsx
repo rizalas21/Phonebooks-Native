@@ -84,6 +84,7 @@ const css = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 3,
     width: '10%',
+    paddingBottom: 5,
   },
   btnIcon: {
     backgroundColor: 'rgb(175, 107, 24)',
