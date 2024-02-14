@@ -84,7 +84,7 @@ export default function ContactItem({item}: {item: any}) {
       <View style={css.containerData} key={item.name}>
         <TouchableOpacity
           style={css.containerImage}
-          onPress={() => navigation.navigate('Avatar', {id: item.id})}>
+          onPress={() => navigation.navigate('Avatar', {id: item.id, avatar: item.avatar})}>
           <Image
             source={{
               uri: `http://192.168.100.167:3001/images/${
