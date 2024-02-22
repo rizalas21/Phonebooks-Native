@@ -21,7 +21,7 @@ router.get('/phonebooks/:id', async function (req, res, next) {
 
 router.get('/phonebooks', async function (req, res, next) {
   try {
-    const { page = 1, limit = 30, keyword = "", sort = "ASC" } = req.query
+    const { page = 1, limit = 10, keyword = "", sort = "ASC" } = req.query
     console.log('keyword be -> ', keyword)
     const { count, rows } = await models.User.findAndCountAll({
       where: {

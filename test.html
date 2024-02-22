@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div id="outer" style="height: 100%; width: 100%; background-color: aqua;">
+        <div id="inner" style="height: 50%; width: 50%; background-color: white;">Klik saya</div>
+    </div>
+
+    <script>
+        document.getElementById('outer').addEventListener('click', function (e) {
+            console.log('Klik pada elemen outer');
+        });
+
+        document.getElementById('inner').addEventListener('click', function (e) {
+            // e.stopPropagation();
+            console.log('Klik pada elemen inner');
+        });
+    </script>
+</body>
+
+</html>

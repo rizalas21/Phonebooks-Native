@@ -1,42 +1,37 @@
 import {faCamera, faImage} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {useNavigation, useRoute} from '@react-navigation/native';
-import {useCallback, useState} from 'react';
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import {useNavigation} from '@react-navigation/native';
+import {useState} from 'react';
+import {
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  PermissionsAndroid,
+} from 'react-native';
 import {useDispatch} from 'react-redux';
+import {UpdateAvatar} from '../actions/contact';
+import OpenCamera from './imagepicker/OpenCamera';
+import openLibrary from './imagepicker/OpenLibrary';
 
 export default function Avatar({navigate, route}: {navigate: any; route: any}) {
   const dispatch: any = useDispatch();
   const navigation: any = useNavigation();
   const [isShow, setIsShow] = useState(true);
-  const [file, setFile]: any = useState(null);
+  const [file, setFile]: any = useState();
   const {id, avatar} = route.params;
-  console.log(file);
 
-  const handleAvatar: Function = useCallback(
-    (type: string, options: any) => {
-      if (type === 'camera') {
-        launchCamera(options, data => {
-          if (!data?.didCancel) {
-            setFile(data);
-            setIsShow(false);
-          }
-        });
-      } else if (type === 'album') {
-        launchImageLibrary(options, data => {
-          if (!data?.didCancel) {
-            setFile(data);
-            setIsShow(false);
-          }
-        });
-      }
-    },
-    [setIsShow, setFile],
-  );
   const save = () => {
     const formData = new FormData();
-    formData.append('avatar', {});
+    formData.append('avatar', {
+      name: file[0].fileName,
+      size: file[0].fileSize,
+      type: file[0].type,
+      uri: file[0].uri,
+    });
+    dispatch(UpdateAvatar(id, formData));
+    navigation.goBack();
   };
   return (
     <View style={css.container}>
@@ -47,7 +42,9 @@ export default function Avatar({navigate, route}: {navigate: any; route: any}) {
             onPress={() => navigation.navigate('Home')}>
             <Text style={css.p}>Cancel</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={css.buttonExecuteSave}>
+          <TouchableOpacity
+            style={css.buttonExecuteSave}
+            onPress={() => save()}>
             <Text style={css.p}>Save</Text>
           </TouchableOpacity>
         </View>
@@ -67,9 +64,11 @@ export default function Avatar({navigate, route}: {navigate: any; route: any}) {
             ) : (
               <Image
                 source={{
-                  uri: `http://192.168.100.167:3001/images/${
-                    avatar ? avatar : 'Defaultavatar.png'
-                  }`,
+                  uri: file
+                    ? file[0].uri
+                    : `http://192.168.100.167:3001/images/${
+                        avatar ? avatar : 'Defaultavatar.png'
+                      }`,
                 }}
                 style={css.avatar}
               />
@@ -78,28 +77,12 @@ export default function Avatar({navigate, route}: {navigate: any; route: any}) {
           <View style={css.buttonPicture}>
             <TouchableOpacity
               style={css.button}
-              onPress={() =>
-                handleAvatar('camera', {
-                  mediaType: 'photo',
-                  includeBase64: false,
-                  saveToPhotos: true,
-                  maxWidth: 100,
-                  maxHeight: 100,
-                })
-              }>
+              onPress={() => OpenCamera({setIsShow, setFile})}>
               <FontAwesomeIcon icon={faCamera} size={20} />
             </TouchableOpacity>
             <TouchableOpacity
               style={css.button}
-              onPress={() =>
-                handleAvatar('album', {
-                  mediaType: 'photo',
-                  selectionLimit: 1,
-                  includeBase64: false,
-                  maxWidth: 100,
-                  maxHeight: 100,
-                })
-              }>
+              onPress={() => openLibrary({setIsShow, setFile})}>
               <FontAwesomeIcon icon={faImage} size={20} />
             </TouchableOpacity>
           </View>
@@ -159,13 +142,16 @@ const css = StyleSheet.create({
     borderRadius: 5,
   },
   avatar: {
-    maxHeight: 100,
-    maxWidth: 100,
+    height: 150,
+    width: 150,
+    marginLeft: 20,
+    resizeMode: 'center',
   },
   containerPicture: {
     display: 'flex',
     flexDirection: 'row',
     width: '100%',
+    marginVertical: 30,
   },
   buttonPicture: {
     display: 'flex',
@@ -184,9 +170,11 @@ const css = StyleSheet.create({
     fontSize: 25,
     color: 'black',
     fontWeight: '600',
+    marginBottom: 20,
   },
   h3: {
     fontSize: 15,
+    marginLeft: 50,
   },
   p: {
     color: 'white',
