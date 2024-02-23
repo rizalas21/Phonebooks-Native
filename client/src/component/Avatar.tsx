@@ -30,7 +30,6 @@ export default function Avatar({navigate, route}: {navigate: any; route: any}) {
       type: file[0].type,
       uri: file[0].uri,
     });
-    console.log('masuk save', file)
     dispatch(UpdateAvatar(id, formData));
     navigation.goBack();
   };

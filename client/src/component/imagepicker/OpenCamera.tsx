@@ -16,7 +16,6 @@ export default function OpenCamera({
         console.log('error image picker', res.errorMessage);
       } else {
         const data = res.assets;
-        console.log('ini response', res);
         setIsShow(false);
         setFile(data);
       }

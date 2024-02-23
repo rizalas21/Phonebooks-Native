@@ -21,7 +21,6 @@ export default function ContactAdd() {
       setError('Please Fill in the Section Below');
       return;
     }
-    console.log('masuk dispatch');
     dispatch(addPhonebooks({contact: user}));
     navigation.navigate('Home');
   };

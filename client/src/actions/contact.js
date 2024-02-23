@@ -41,7 +41,6 @@ export const UpdateAvatar = (id, formData) => dispatch => req.put(`phonebooks/${
         'Content-Type': 'multipart/form-data'
     }
 }).then(({ data }) => {
-    console.log('masuk update avatar', data)
     dispatch({ type: 'UPDATE_AVATAR_SUCCESS', data })
 }).catch((err) => {
     dispatch({ type: 'UPDATE_AVATAR_FAILED' })
