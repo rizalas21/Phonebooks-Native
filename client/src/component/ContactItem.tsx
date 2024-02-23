@@ -45,71 +45,75 @@ export default function ContactItem({item}: {item: any}) {
 
   if (isEdit) {
     return (
-      <View style={css.containerData}>
-        <TouchableOpacity
-          style={css.containerImage}
-          onPress={() => navigation.navigate('Avatar')}>
-          <Image
-            source={{
-              uri: `http://192.168.100.167:3001/images/${
-                item.avatar ? item.avatar : 'Defaultavatar.png'
-              }`,
-            }}
-            style={css.avatar}
-          />
-        </TouchableOpacity>
-        <View style={css.list}>
-          <TextInput
-            style={css.input}
-            value={newData.name}
-            onChangeText={text => setNewData({...newData, name: text})}
-          />
-          <TextInput
-            style={css.input}
-            value={newData.phone}
-            onChangeText={text => setNewData({...newData, phone: text})}
-          />
-          <View style={css.button}>
-            <TouchableOpacity
-              style={css.btnEdit}
-              onPress={() => handleData({id: item.id})}>
-              <FontAwesomeIcon size={20} icon={faFloppyDisk} />
-            </TouchableOpacity>
+      <View style={css.containerContent}>
+        <View style={css.containerData}>
+          <TouchableOpacity
+            style={css.containerImage}
+            onPress={() => navigation.navigate('Avatar')}>
+            <Image
+              source={{
+                uri: `http://192.168.100.167:3001/images/${
+                  item.avatar ? item.avatar : 'Defaultavatar.png'
+                }`,
+              }}
+              style={css.avatar}
+            />
+          </TouchableOpacity>
+          <View style={css.list}>
+            <TextInput
+              style={css.input}
+              value={newData.name}
+              onChangeText={text => setNewData({...newData, name: text})}
+            />
+            <TextInput
+              style={css.input}
+              value={newData.phone}
+              onChangeText={text => setNewData({...newData, phone: text})}
+            />
+            <View style={css.button}>
+              <TouchableOpacity
+                style={css.btnEdit}
+                onPress={() => handleData({id: item.id})}>
+                <FontAwesomeIcon size={20} icon={faFloppyDisk} />
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
       </View>
     );
   } else {
     return (
-      <View style={css.containerData} key={item.name}>
-        <TouchableOpacity
-          style={css.containerImage}
-          onPress={() =>
-            navigation.navigate('Avatar', {id: item.id, avatar: item.avatar})
-          }>
-          <Image
-            source={{
-              uri: `http://192.168.100.167:3001/images/${
-                item.avatar ? item.avatar : 'Defaultavatar.png'
-              }`,
-            }}
-            style={css.avatar}
-          />
-        </TouchableOpacity>
-        <View style={css.list}>
-          <Text style={css.text}>{item.name}</Text>
-          <Text style={css.text}>{item.phone}</Text>
-          <View style={css.button}>
-            <TouchableOpacity
-              style={css.btnEdit}
-              onPress={() => setIsEdit(!isEdit)}>
-              <FontAwesomeIcon size={20} icon={faPenToSquare} />
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={css.btnDelete}
-              onPress={() => submit({item})}>
-              <FontAwesomeIcon size={20} icon={faTrashCan} />
-            </TouchableOpacity>
+      <View style={css.containerContent}>
+        <View style={css.containerData} key={item.name}>
+          <TouchableOpacity
+            style={css.containerImage}
+            onPress={() =>
+              navigation.navigate('Avatar', {id: item.id, avatar: item.avatar})
+            }>
+            <Image
+              source={{
+                uri: `http://192.168.100.167:3001/images/${
+                  item.avatar ? item.avatar : 'Defaultavatar.png'
+                }`,
+              }}
+              style={css.avatar}
+            />
+          </TouchableOpacity>
+          <View style={css.list}>
+            <Text style={css.text}>{item.name}</Text>
+            <Text style={css.text}>{item.phone}</Text>
+            <View style={css.button}>
+              <TouchableOpacity
+                style={css.btnEdit}
+                onPress={() => setIsEdit(!isEdit)}>
+                <FontAwesomeIcon size={20} icon={faPenToSquare} />
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={css.btnDelete}
+                onPress={() => submit({item})}>
+                <FontAwesomeIcon size={20} icon={faTrashCan} />
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
       </View>
@@ -118,9 +122,15 @@ export default function ContactItem({item}: {item: any}) {
 }
 
 const css = StyleSheet.create({
+  containerContent: {
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   containerData: {
     backgroundColor: '#3333',
-    width: '100%',
+    width: '90%',
     height: 'auto',
     display: 'flex',
     flexDirection: 'row',

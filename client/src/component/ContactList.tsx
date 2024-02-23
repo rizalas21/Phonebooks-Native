@@ -18,7 +18,7 @@ export default function ContactList({
 
   const handleScroll = async () => {
     try {
-      if (page < pages) {
+      if (page < pages && !isLoading) {
         setIsLoading(true);
         const newPage = page + 1;
         dispatch(loadPage({page: newPage, keyword, sort}));
@@ -48,12 +48,13 @@ export default function ContactList({
   return (
     <View style={css.container}>
       <FlatList
-        style={css.container}
+        style={css.containerList}
         data={phonebooks}
         renderItem={({item}: {item: any}) => <ContactItem item={item} />}
         onEndReached={handleScroll}
         onEndReachedThreshold={0.2}
       />
+      {isLoading && <p>Loading Data</p>}
     </View>
   );
 }
@@ -64,5 +65,8 @@ const css = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 90,
+  },
+  containerList: {
+    width: '100%',
   },
 });

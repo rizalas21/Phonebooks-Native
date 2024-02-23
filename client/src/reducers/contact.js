@@ -2,7 +2,7 @@ const initialState = {
     phonebooks: [],
     page: 1,
     pages: 1,
-    limit: 30,
+    limit: 10,
     total: 31
 }
 
@@ -15,12 +15,13 @@ const contact = (state = initialState, action) => {
             return { ...state, phonebooks: [...state.phonebooks, ...action.data.phonebooks], page: action.data.page }
 
         case 'ADD_PHONEBOOKS_SUCCESS':
-            return state
+            return { ...state, phonebooks: [action.data, ...state.phonebooks], page: 1 }
         case 'DELETE_PHONEBOOKS_SUCCESS':
-            return { phonebooks: state.phonebooks.filter(data => data.id !== action.data.id) }
+            return { ...state, phonebooks: state.phonebooks.filter(data => data.id !== action.data.id) }
 
         case 'UPDATE_PHONEBOOKS_SUCCESS':
             return {
+                ...state,
                 phonebooks: state.phonebooks.map((item) => {
                     if (item.id === action.data.id) {
                         item.name = action.data.name;
@@ -32,6 +33,7 @@ const contact = (state = initialState, action) => {
 
         case 'UPDATE_AVATAR_SUCCESS':
             return {
+                ...state,
                 phonebooks: state.phonebooks.map((item) => {
                     if (item.id === action.data.id) {
                         item.avatar = action.data.avatar;

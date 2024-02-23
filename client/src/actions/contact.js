@@ -18,7 +18,7 @@ export const loadPage = ({ page, keyword, sort }) => dispatch => req.get('phoneb
     dispatch({ type: 'LOAD_PAGE_FAILED' })
 })
 
-export const addPhonebooks = (contact) => dispatch => req.post('phonebooks', contact).then(({ data }) => {
+export const addPhonebooks = ({ contact }) => dispatch => req.post('phonebooks', contact).then(({ data }) => {
     dispatch({ type: 'ADD_PHONEBOOKS_SUCCESS', data })
 }).catch((err) => {
     dispatch({ type: 'ADD_PHONEBOOKS_FAILED' })
@@ -41,6 +41,7 @@ export const UpdateAvatar = (id, formData) => dispatch => req.put(`phonebooks/${
         'Content-Type': 'multipart/form-data'
     }
 }).then(({ data }) => {
+    console.log('masuk update avatar', data)
     dispatch({ type: 'UPDATE_AVATAR_SUCCESS', data })
 }).catch((err) => {
     dispatch({ type: 'UPDATE_AVATAR_FAILED' })
